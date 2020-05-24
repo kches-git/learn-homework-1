@@ -14,8 +14,9 @@ def ask_user():
     """
     Замените pass на ваш код
     """
-    pass
-
+    user_input = ''
+    while user_input!='Хорошо':
+        user_input = input('Как дела? \n').lower().capitalize()
     
 if __name__ == "__main__":
     ask_user()

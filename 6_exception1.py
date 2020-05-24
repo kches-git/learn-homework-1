@@ -14,7 +14,15 @@ def ask_user():
     """
     Замените pass на ваш код
     """
-    pass
+    dict = {"Как дела?": "Хорошо!", "Что делаешь?": "Программирую", "Как погода?": "Солнечно!", "Когда отдыхать?": "Покой нам только снится =)"}
     
+    while True:    
+        try:
+            user_input = input('\nВведите ваш вопрос: \n').lower().capitalize()
+            print(dict.get(user_input, "Я вас не понимаю"))
+        except KeyboardInterrupt:
+            print('Пока!')
+            break    
+
 if __name__ == "__main__":
     ask_user()

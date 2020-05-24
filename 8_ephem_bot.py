@@ -14,6 +14,8 @@
 """
 import logging
 
+import ephem
+
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
@@ -36,6 +38,14 @@ def greet_user(bot, update):
     print(text)
     update.message.reply_text(text)
 
+def planet(update, context):
+    planet_name = update.message.text.split()[1].lower().capitalize()
+    try:
+        planet = getattr(ephem, planet_name)()
+        planet.compute()
+        update.message.reply_text(ephem.constellation(planet))
+    except AttributeError:
+        update.message.reply_text('Введите корректное название планеты на латинице')
 
 def talk_to_me(bot, update):
     user_text = update.message.text 
@@ -48,6 +58,7 @@ def main():
     
     dp = mybot.dispatcher
     dp.add_handler(CommandHandler("start", greet_user))
+    dp.add_handler(CommandHandler("planet", planet))
     dp.add_handler(MessageHandler(Filters.text, talk_to_me))
     
     mybot.start_polling()
